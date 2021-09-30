@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Navigation from './components/Navigation';
-import {getUsers, getCurrentUser, setCurrentUserLocalStorage, setUsersToLocalStorage, login, resetCurrentUser} from './data/usersData';
+import {getUsers, getCurrentUser, setUsersToLocalStorage, resetCurrentUser} from './data/usersData';
 import { getAlbums, setAlbumsToLocalStorage } from './data/albumsData';
 import { getPhotos, setPhotosToLocalStorage } from './data/photosData';
 import Page from './components/Page';
@@ -12,29 +12,8 @@ function App() {
   const [users, setUsers] = useState(getUsers());
   const [currentUser, setCurrentUser] = useState(getCurrentUser());
 
-  
-
-  const login = (currentUser) =>{
-    const idUser = login(currentUser)
-    if(idUser){
-      setCurrentUser(idUser);
-      setCurrentUserLocalStorage(idUser)
-      return true
-    }
-      return false
-  }
-
-  /* const getUser = ()=>{
-    return users.find(user => user.id === currentUser)
-  } */
-
   const getUserNameById = (id)=>{
     return users.find(user => +user.id === id).fName
-  }
-
-  const logout = ()=>{
-    setCurrentUser(null)
-    resetCurrentUser()
   }
 
   const updateUser = user =>{
@@ -86,8 +65,6 @@ function App() {
       users,
       currentUser,
       getUserNameById,
-      login,
-      logout,
       getCurrentUser,
       updateUser,
       setCurrentUser,

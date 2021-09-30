@@ -1,14 +1,14 @@
 import { Link, useHistory } from 'react-router-dom'
 import {connect} from 'react-redux'
-import { initialState } from '../store/users/actionsCreator'
+import { initialState, logout } from '../store/users/actionsCreator'
 import { useEffect } from 'react'
 
-const Auth = ({currentUser, initial, loading, users})=>{
+const Auth = ({currentUser, initial, logout, loading, users})=>{
 
     useEffect(()=>{
         if(users.length ===0)
         initial()
-    }, [])
+    }, [initial, users.length])
 
     const history = useHistory()
  return (
@@ -17,7 +17,7 @@ const Auth = ({currentUser, initial, loading, users})=>{
                 <li className ="text-white me-3 list-unstyled">{`Hi, ${currentUser.fName}!`}</li>
                 <li className ="text-white list-unstyled"
                     onClick = {()=>{
-                        //logout()
+                        logout()
                         history.push('/')
                     }}
                     style = {{cursor :'pointer'}}
@@ -43,7 +43,8 @@ const mapStateToProps = ({usersReducer})=>{
 
 const mapDispatchToProps = dispatch => {
     return{
-        initial: ()=>dispatch(initialState())
+        initial: ()=>dispatch(initialState()),
+        logout: () => dispatch(logout())
     }
 }
 

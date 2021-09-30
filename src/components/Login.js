@@ -4,16 +4,16 @@ import Error from './Error'
 import {connect} from 'react-redux'
 import { login } from '../store/users/actionsCreator'
 
-const Login = ()=>{
-    const [currentUser, setCurrentUser] = useState({email:'', password:''})
-    const [error, setError] = useState(null)
+const Login = ({ login, currentUser, error })=>{
+    const [user, setUser] = useState({email:'', password:''})
 
     const onChangeHandler = ({target})=>{   
-        setCurrentUser({...currentUser, [target.name]:target.value})
+        setUser({...user, [target.name]:target.value})
     }
 
 
     return(
+        <>{currentUser && <Redirect to ='/users' />}
         <div className='container my-5'>
             <div className = 'col-6 mx-auto my-5'>
                 {error && <Error message = {error} />}
@@ -24,31 +24,25 @@ const Login = ()=>{
                     name="email"
                     placeholder="Type email"
                     onChange = {onChangeHandler}
-                    value = {currentUser.email}
+                    value = {user.email}
                 />
                 <input
                     className="form-control my-3"
                     type="text"
                     name="password"
                     placeholder="Type password"
-                    value = {currentUser.password}
+                    value = {user.password}
                     onChange = {onChangeHandler}
                 />
                 <div className="d-flex justify-content-end">
                     <button className="btn btn-primary"
                             onClick = {()=>{
-                                setError(null)
-                                if(setCurrentUser(currentUser)) 
-                                <Redirect to ='/users' />
-                                else{
-                                    setError('login or password is wrong')
-                                    setCurrentUser({email:'', password:''})
-                                }
+                                login(user)
                             }}
                           >Login</button>
                 </div>
             </div>
-        </div>
+        </div></>
     )
 }
 

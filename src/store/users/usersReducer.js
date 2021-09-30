@@ -24,20 +24,18 @@ const usersReducer = (state = init, { type, payload }) => {
                 loading: false
             }
         case Types.login:
+            localStorage.setItem('currentUser', JSON.stringify(payload.user))
             return {
                 ...state,
-                users: [...state.users, payload.currentUser],
-                currentUser: payload,
+                currentUser: payload.idUser,
                 loading: false
             }
         case Types.logout:
+            localStorage.removeItem('currentUser')
             return {
                 ...state,
-                users: [...state,payload.user],
                 currentUser: null,
-                loading: false
             }
-
 
         case Types.load:
             return {

@@ -50,17 +50,20 @@ export const registration = (user)=>{
 
 export const login = (user)=>{
     return dispatch =>{
-        dispatch({type: Types.login})
+        dispatch({type: Types.load})
         setTimeout(()=>{
             try{
-                const idUser = login(user)
+                const idUser = UsersData.login(user)
             if(idUser){
                 dispatch({
                     type: Types.login,
-                    payload: user
+                    payload: {
+                        idUser,
+                        user
+                    }
                 })
             }else{
-                throw new Error ('user specified email is already exist')
+                throw new Error ('user email or password is incorrect')
             }
 
             }catch(e){
